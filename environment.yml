@@ -1,0 +1,19 @@
+name: orbcuda
+channels:
+  - conda-forge
+  - nvidia
+
+dependencies:
+  - python=3.10
+  - numpy
+  - ffmpeg
+  - pip
+
+  # GPU tooling (if available in your channel stack)
+  - cudatoolkit
+  - cudnn
+
+  - pip:
+      - opencv-python
+      - opencv-contrib-python
+      - argparse

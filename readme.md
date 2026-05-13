@@ -2,7 +2,7 @@
 
 **A high-performance video frame search engine for finding exact image matches inside video timelines using feature-based visual matching.**
 
-*(Note: Currently heavily CPU-optimized via multi-threading. True GPU/CUDA acceleration is in active development).*
+*(Note: Currently heavily CPU-optimized via multi-threading. True GPU/CUDA acceleration is in active development, but the environment is already pre-configured with CUDA toolkits).*
 
 ---
 
@@ -58,37 +58,38 @@ Think of it as:
 
 ## 📦 Installation
 
-### 1. System Requirements
+ORBCUDA uses Conda to manage all dependencies—including FFmpeg and the NVIDIA CUDA toolkits—ensuring a clean, isolated setup.
 
-Ensure FFmpeg is installed and accessible in your system's PATH:
+### 1. Create the `environment.yml` file
+Save the following as `environment.yml` in your project directory:
 
-```bash
-ffmpeg -version
-ffprobe -version
+```yaml
+name: orbcuda
+channels:
+  - conda-forge
+  - nvidia
+
+dependencies:
+  - python=3.10
+  - numpy
+  - ffmpeg
+  - pip
+
+  # GPU tooling 
+  - cudatoolkit
+  - cudnn
+
+  - pip:
+      - opencv-python
+      - opencv-contrib-python
 ```
+*(Note: `argparse` is built into standard Python 3, so it does not need to be explicitly installed via pip).*
 
-If missing (Ubuntu/Debian):
-```bash
-sudo apt update && sudo apt install ffmpeg
-```
-*(On macOS: `brew install ffmpeg` | On Windows: install via `winget install ffmpeg` or download binaries).*
-
----
-
-### 2. Python Dependencies
-
-Create a virtual environment and install the required packages:
+### 2. Build and Activate the Environment
 
 ```bash
-# Using conda
-conda create -n orbcuda python=3.10
+conda env create -f environment.yml
 conda activate orbcuda
-pip install numpy opencv-python
-
-# OR using standard venv
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install numpy opencv-python
 ```
 
 ---
